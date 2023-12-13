@@ -1,6 +1,6 @@
 import { useTheme } from '@react-navigation/native';
 import * as React from 'react';
-import { StyleSheet, TextInputProps } from 'react-native';
+import { StyleSheet, TextInput, TextInputProps } from 'react-native';
 
 const styles = StyleSheet.create({
     input: {
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     },
 });
 
-const TextInput = (props: TextInputProps) => {
+const MyTextInput = (props: TextInputProps) => {
     const {colors} = useTheme();
     return (
         <TextInput
@@ -26,4 +26,5 @@ const TextInput = (props: TextInputProps) => {
         />
     );
 
-export default TextInput;
+}
+export default MyTextInput
