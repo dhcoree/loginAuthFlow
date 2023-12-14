@@ -3,15 +3,17 @@ import * as React from 'react';
 import HomeScreen from '../screens/HomeScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
+export interface AppParamList {
+    Home: undefined;
+    Settings: undefined;
+}
 const Stack = createNativeStackNavigator();
 
-const AppStack = () => {
+export function AppStack() {
     return (
         <Stack.Navigator>
             <Stack.Screen name="Home" component={HomeScreen} />
             <Stack.Screen name="Settings" component={SettingsScreen} />
         </Stack.Navigator>
     );
-};
-
-export default AppStack;
+}

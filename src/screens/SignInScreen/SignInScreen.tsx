@@ -1,14 +1,16 @@
-import * as React from 'react';
+import React, { useCallback } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 
 //@ts-ignore
-import logopurple from '../assets/logopurple.png';
-import MyTextInput from '../components/MyTextInput';
-import MyButton from '../components/MyButton';
+import logopurple from '../../assets/logopurple.png';
+import MyTextInput from '../../components/MyTextInput';
+import MyButton from '../../components/MyButton';
+import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../../context/Auth';
 
 const style = StyleSheet.create({
     container: {
-        flex: 1, 
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: 16,
@@ -23,17 +25,22 @@ const style = StyleSheet.create({
     }
 })
 
-const handleSignIn = () => {
-    console.log('Botão pressionado!');
-};
 
 const SignInScreen = () => {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const navigation = useNavigation()
+    const { signIn } = useAuth();
 
-    return ( 
+    const handleSignIn = useCallback(() => {
+        signIn(email, password)
+        //@ts-ignore
+        navigation.navigate('Home')
+    }, [])
+
+    return (
         <View style={style.container}>
-            <Image 
+            <Image
                 style={style.logo}
                 resizeMode='contain'
                 source={logopurple}
@@ -47,7 +54,7 @@ const SignInScreen = () => {
                 onChangeText={setEmail}
             />
 
-            <MyTextInput 
+            <MyTextInput
                 secureTextEntry
                 placeholder='senha'
                 value={password}
@@ -58,7 +65,7 @@ const SignInScreen = () => {
             <View style={style.spacing} />
 
             <MyButton onPress={handleSignIn}>Acessar conta</MyButton>
-        </View> 
+        </View>
     );
 }
 
