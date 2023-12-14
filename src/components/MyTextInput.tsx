@@ -1,6 +1,5 @@
-import { useTheme } from '@react-navigation/native';
-import * as React from 'react';
-import { StyleSheet, TextInput, TextInputProps } from 'react-native';
+import React, { useRef } from 'react';
+import { StyleSheet, TextInput, TextInputProps, TouchableWithoutFeedback, Keyboard } from 'react-native';
 
 const styles = StyleSheet.create({
     input: {
@@ -10,21 +9,29 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 50,
         marginBottom: 16,
+        borderColor: '#380759'
     },
 });
 
 const MyTextInput = (props: TextInputProps) => {
-    const {colors} = useTheme();
-    return (
-        <TextInput
-            placeholderTextColor="#727272"
-            style={[
-                styles.input,
-                {borderColor: colors.primary, color: colors.background},
-            ]}
-            {...props}
-        />
-    );
+    const textInputRef = useRef<TextInput>(null);
 
-}
-export default MyTextInput
+const dismissKeyboard = () => {
+    if (textInputRef.current) {
+      textInputRef.current.blur(); // Remover o foco do TextInput
+    }
+};
+
+    return (
+        <TouchableWithoutFeedback onPress={dismissKeyboard}>
+            <TextInput
+                ref={textInputRef}
+                placeholderTextColor="#727272"
+                style={styles.input}
+                {...props}
+            />
+        </TouchableWithoutFeedback>
+    );
+};
+
+export default MyTextInput;
